@@ -102,12 +102,20 @@ active: false
 - Gravity - 
 active: false
 - Tint - 
-colorsCount: 3
-colors0: 0.64705884
+colorsCount: 9
+colors0: 0.4392157
 colors1: 0.09803922
 colors2: 0.9647059
-timelineCount: 1
+colors3: 0.9647059
+colors4: 0.09803922
+colors5: 0.81960785
+colors6: 0.80784315
+colors7: 0.09803922
+colors8: 0.9647059
+timelineCount: 3
 timeline0: 0.0
+timeline1: 0.8950086
+timeline2: 1.0
 - Transparency - 
 lowMin: 0.0
 lowMax: 0.0

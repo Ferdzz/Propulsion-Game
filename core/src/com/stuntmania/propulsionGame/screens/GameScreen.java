@@ -72,6 +72,7 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		image = new Sprite(new Texture(Gdx.files.internal("img/cthulu.png")));
 		cthulu = world.createBody(bd);
+		world.setContactListener(new Test());
 		loader.attachFixture(cthulu, "Name", fd, image.getWidth());
 
 		world.createBody(bdw).createFixture(fdw);

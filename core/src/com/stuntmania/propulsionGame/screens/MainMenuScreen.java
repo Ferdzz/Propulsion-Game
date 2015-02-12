@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -25,6 +26,7 @@ public class MainMenuScreen implements Screen {
 	private Texture logo;
 	private Texture background;
 	private Texture parallax;
+	private Texture parallax2;
 	
 	private Table firstTable;
 	private Table optionsTable;
@@ -67,11 +69,11 @@ public class MainMenuScreen implements Screen {
 				Gdx.app.exit();
 			}
 		});
-		firstTable.add(playNow);
+		firstTable.add(playNow).width(250);
 		firstTable.row();
-		firstTable.add(options);
+		firstTable.add(options).width(250);
 		firstTable.row();
-		firstTable.add(exitGame);
+		firstTable.add(exitGame).width(250);
 		firstTable.setY(10 / Gdx.graphics.getHeight());
 		stage.addActor(firstTable);
 		
@@ -89,8 +91,9 @@ public class MainMenuScreen implements Screen {
 		optionsTable.add(closeOptions);
 		
 		logo = new Texture(Gdx.files.internal("img/logos/1.png"));
-		background = new Texture(Gdx.files.internal("img/background.png"));
-		parallax = new Texture(Gdx.files.internal("img/parallax.png"));
+		background = new Texture(Gdx.files.internal("img/mainmenu/background.png"));
+		parallax = new Texture(Gdx.files.internal("img/mainmenu/parallax 1.png"));
+		parallax2 = new Texture(Gdx.files.internal("img/mainmenu/parallax 2.png"));
 		
 		particle = new ParticleEffect();
 		particle.load(Gdx.files.internal("particles/Title.p"), Gdx.files.internal("particles"));
@@ -108,7 +111,8 @@ public class MainMenuScreen implements Screen {
 
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.draw(parallax, Gdx.input.getX() / 10 - 100, Gdx.input.getY() / 10 - 100 , parallax.getWidth(), parallax.getHeight());
+		batch.draw(parallax, Gdx.input.getX() / 11 - 100, Gdx.input.getY() / 11 - 100 , Gdx.graphics.getWidth() * 1.3F, Gdx.graphics.getHeight() * 1.3F);
+		batch.draw(parallax2, Gdx.input.getX() / 6 - 200, Gdx.input.getY() / 6 - 100 , Gdx.graphics.getWidth() * 1.2F, Gdx.graphics.getHeight() * 1.2F);
 		particle.draw(batch, delta * 2 / 3);
 		batch.draw(logo, (Gdx.graphics.getWidth() / 2) - (logo.getWidth() / 2), Gdx.graphics.getHeight() - logo.getHeight());
 		batch.end();
