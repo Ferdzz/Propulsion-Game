@@ -8,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -27,8 +26,6 @@ import com.stuntmania.propulsionGame.server.Server;
 
 public class GameScreen implements Screen, InputProcessor {
 
-	private boolean isHost;
-	private Socket socket;
 	private Body cthulu;
 	private World world;
 	private OrthographicCamera cam;
@@ -39,15 +36,8 @@ public class GameScreen implements Screen, InputProcessor {
 	private boolean charging;
 	private float charge;
 
-	public GameScreen(boolean b) {
-		this.isHost = b;
-	}
-
 	@Override
 	public void show() {
-		if (isHost) {
-			socket = Gdx.net.newClientSocket(Protocol.TCP, "localhost", Server.PORT, null);
-		}
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
@@ -103,6 +93,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if(charging) {
 			charge += delta * 10000;
 		}
+		System.out.println(Gdx.graphics.getWidth());
 	}
 
 	//RENDERING THE GAME ----------
@@ -137,7 +128,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		socket.dispose();
+
 	}
 
 	@Override
