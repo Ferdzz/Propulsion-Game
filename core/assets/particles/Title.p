@@ -6,12 +6,12 @@ lowMin: 2.0
 lowMax: 2.0
 - Count - 
 min: 0
-max: 200
+max: 159
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 250.0
-highMax: 250.0
+highMin: 200.0
+highMax: 200.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -40,8 +40,8 @@ active: false
 - Spawn Shape - 
 shape: line
 - Spawn Width - 
-lowMin: 10.0
-lowMax: 10.0
+lowMin: 0.0
+lowMax: 0.0
 highMin: 1080.0
 highMax: 1080.0
 relative: false
@@ -74,7 +74,7 @@ active: true
 lowMin: 0.0
 lowMax: 0.0
 highMin: 30.0
-highMax: 300.0
+highMax: 275.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -82,10 +82,10 @@ timelineCount: 1
 timeline0: 0.0
 - Angle - 
 active: true
-lowMin: -90.0
-lowMax: -90.0
-highMin: -45.0
-highMax: -135.0
+lowMin: 270.0
+lowMax: 270.0
+highMin: 270.0
+highMax: 270.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -103,7 +103,7 @@ active: false
 active: false
 - Tint - 
 colorsCount: 9
-colors0: 0.4392157
+colors0: 0.38431373
 colors1: 0.09803922
 colors2: 0.9647059
 colors3: 0.9647059
@@ -114,7 +114,7 @@ colors7: 0.09803922
 colors8: 0.9647059
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.8950086
+timeline1: 0.9356725
 timeline2: 1.0
 - Transparency - 
 lowMin: 0.0
@@ -125,12 +125,12 @@ relative: false
 scalingCount: 4
 scaling0: 0.0
 scaling1: 1.0
-scaling2: 0.75
+scaling2: 0.36842105
 scaling3: 0.0
 timelineCount: 4
 timeline0: 0.0
 timeline1: 0.2
-timeline2: 0.8
+timeline2: 0.48630136
 timeline3: 1.0
 - Options - 
 attached: false
@@ -140,4 +140,4 @@ additive: false
 behind: false
 premultipliedAlpha: false
 - Image Path -
-particle.png
+C:\Users\Frédéric\Documents\workspace\Propulsion-Game\core\assets\particles\particle.png

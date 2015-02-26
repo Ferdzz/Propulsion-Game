@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.stuntmania.propulsionGame.PropulsionGame;
 import com.stuntmania.propulsionGame.server.Server;
 
@@ -143,7 +144,7 @@ public class MainMenuScreen implements Screen {
 		closeWaitConnect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				PropulsionGame.server.disposeSockets();
+//				PropulsionGame.server.disposeSockets();
 				stage.addActor(hostTable);
 				waitConnectTable.remove();
 			}
@@ -163,7 +164,10 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				try {
-					PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, joinAddress.getText(), Server.PORT, null);
+					PropulsionGame.warpController.warpClient.connectWithUserName("join");
+					PropulsionGame.isHost = false;
+//					PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, joinAddress.getText(), Server.PORT, null);
+					PropulsionGame.game.setScreen(new GameScreen());
 				} catch (Exception e) {
 					joinInfo.setText("Error joining game");
 				}
@@ -174,10 +178,11 @@ public class MainMenuScreen implements Screen {
 		startHosting.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				PropulsionGame.server = new Server();
-				PropulsionGame.server.start();
+//				PropulsionGame.server = new Server();
+//				PropulsionGame.server.start();
+				PropulsionGame.warpController.warpClient.connectWithUserName("1958872394");
 				stage.addActor(waitConnectTable);
-				PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, "localhost", Server.PORT, null);
+//				PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, "localhost", Server.PORT, null);
 				hostTable.remove();
 			}
 		});
@@ -228,11 +233,11 @@ public class MainMenuScreen implements Screen {
 		waitConnectTable = new Table() {
 			@Override
 			public void act(float delta) {
-				waitInfo.setText(PropulsionGame.server.numberOfOnlinePlayer() + " / 2 players have joined");
-				if(PropulsionGame.server.numberOfOnlinePlayer() == 2) {
-					PropulsionGame.isHost = true;
-					PropulsionGame.game.setScreen(new GameScreen());
-				}
+//				waitInfo.setText(PropulsionGame.server.numberOfOnlinePlayer() + " / 2 players have joined");
+//				if(PropulsionGame.server.numberOfOnlinePlayer() == 2) {
+//					PropulsionGame.isHost = true;
+//					PropulsionGame.game.setScreen(new GameScreen());
+//				}
 				super.act(delta);
 			}
 		};

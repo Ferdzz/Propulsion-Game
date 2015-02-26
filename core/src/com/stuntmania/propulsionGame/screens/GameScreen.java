@@ -3,7 +3,6 @@ package com.stuntmania.propulsionGame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -22,7 +20,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.stuntmania.propulsionGame.BodyEditorLoader;
-import com.stuntmania.propulsionGame.server.Server;
+import com.stuntmania.propulsionGame.PropulsionGame;
 
 public class GameScreen implements Screen, InputProcessor {
 
@@ -32,7 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
 	private SpriteBatch batch;
 	private Sprite image;
 	private Box2DDebugRenderer debug;
-	
+
 	private boolean charging;
 	private float charge;
 
@@ -41,16 +39,17 @@ public class GameScreen implements Screen, InputProcessor {
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
+
 		BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("test.json"));
 		BodyDef bd = new BodyDef();
 		bd.position.set(600, 600);
 		bd.type = BodyType.DynamicBody;
-		bd.linearDamping=0.5F;
+		bd.linearDamping = 0.5F;
 		FixtureDef fd = new FixtureDef();
 		fd.density = 0.0001F;
 		fd.friction = 0.1F;
 		fd.restitution = 0.2f;
-		
+
 		BodyDef bdw = new BodyDef();
 		bdw.position.set(300, 300);
 		bdw.type = BodyType.StaticBody;
@@ -59,16 +58,16 @@ public class GameScreen implements Screen, InputProcessor {
 		Shape shape = new PolygonShape();
 		((PolygonShape) shape).setAsBox(30, 30);
 		fdw.shape = shape;
-		
+
 		image = new Sprite(new Texture(Gdx.files.internal("img/cthulu.png")));
 		cthulu = world.createBody(bd);
 		world.setContactListener(new Test());
 		loader.attachFixture(cthulu, "Name", fd, image.getWidth());
 
 		world.createBody(bdw).createFixture(fdw);
-		
+
 		debug = new Box2DDebugRenderer();
-		
+
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -80,28 +79,28 @@ public class GameScreen implements Screen, InputProcessor {
 		update(delta);
 		draw(delta);
 	}
-	
-	//UPDATING THE GAME -----------
+
+	// UPDATING THE GAME -----------
 	public void update(float delta) {
 		world.step(delta, 10, 10);
 		cam.update();
-		
+
 		image.setOriginCenter();
 		image.setCenter(cthulu.getPosition().x, cthulu.getPosition().y);
 		image.setRotation((float) Math.toDegrees(cthulu.getAngle()));
 
-		if(charging) {
+		if (charging) {
 			charge += delta * 10000;
 		}
-		System.out.println(Gdx.graphics.getWidth());
 	}
 
-	//RENDERING THE GAME ----------
+	// RENDERING THE GAME ----------
 	public void draw(float delta) {
 		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
-		image.draw(batch);
-		batch.end();
+			batch.begin();
+			image.draw(batch);
+			batch.end();
+		
 
 		debug.render(world, cam.combined);
 	}
@@ -148,7 +147,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if(button == Buttons.LEFT) {
+		if (button == Buttons.LEFT) {
 			charging = true;
 			return true;
 		}
@@ -157,7 +156,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if(button == Buttons.LEFT) {
+		if (button == Buttons.LEFT) {
 			Vector3 vec = new Vector3(screenX, screenY, 0);
 			cam.unproject(vec);
 			cthulu.applyForceToCenter(new Vector2(vec.x - cthulu.getPosition().x, vec.y - cthulu.getPosition().y).scl(-charge), true);
