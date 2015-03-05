@@ -3,23 +3,17 @@ package com.stuntmania.propulsionGame.server;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
 import com.shephertz.app42.gaming.multiplayer.client.events.ConnectEvent;
 import com.shephertz.app42.gaming.multiplayer.client.listener.ConnectionRequestListener;
+import com.stuntmania.propulsionGame.PropulsionGame;
 
 public class ConnectionListener implements ConnectionRequestListener {
-
-	WarpController callBack;
-
-	public ConnectionListener(WarpController callBack) {
-		this.callBack = callBack;
-	}
 
 	@Override
 	public void onConnectDone(ConnectEvent e) {
 		if (e.getResult() == WarpResponseResultCode.SUCCESS) {
-			// callBack.onConnectDone(true);
-			System.out.println("success connect");
+			PropulsionGame.warpController.warpClient.createRoom("testroom", "host", 2, null);
+			System.out.println("connect success");
 		} else {
-			System.out.println(e.getResult());
-			// callBack.onConnectDone(false);
+			System.out.println("connect failed");
 		}
 	}
 

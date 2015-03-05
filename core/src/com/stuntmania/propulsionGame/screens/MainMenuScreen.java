@@ -1,16 +1,11 @@
 package com.stuntmania.propulsionGame.screens;
 
-import java.net.InetAddress;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.net.Socket;
-import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,13 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.stuntmania.propulsionGame.PropulsionGame;
-import com.stuntmania.propulsionGame.server.Server;
 
 public class MainMenuScreen implements Screen {
 
 	private Skin skin;
+	
 	private Stage stage;
 	private SpriteBatch batch;
 	private ParticleEffect particle;
@@ -166,7 +160,6 @@ public class MainMenuScreen implements Screen {
 				try {
 					PropulsionGame.warpController.warpClient.connectWithUserName("join");
 					PropulsionGame.isHost = false;
-//					PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, joinAddress.getText(), Server.PORT, null);
 					PropulsionGame.game.setScreen(new GameScreen());
 				} catch (Exception e) {
 					joinInfo.setText("Error joining game");
@@ -178,11 +171,21 @@ public class MainMenuScreen implements Screen {
 		startHosting.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-//				PropulsionGame.server = new Server();
-//				PropulsionGame.server.start();
-				PropulsionGame.warpController.warpClient.connectWithUserName("1958872394");
+				PropulsionGame.warpController.warpClient.connectWithUserName("host");
+				Gdx.app.postRunnable(new Thread() {
+					@Override
+					public void run() {
+						while (!PropulsionGame.warpController.isConnected) {
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						PropulsionGame.game.setScreen(new GameScreen());
+					}
+				});
 				stage.addActor(waitConnectTable);
-//				PropulsionGame.clientSocket = Gdx.net.newClientSocket(Protocol.TCP, "localhost", Server.PORT, null);
 				hostTable.remove();
 			}
 		});
@@ -192,6 +195,20 @@ public class MainMenuScreen implements Screen {
 		
 		joinAddress = new TextField("", skin);
 		joinAddress.setAlignment(Align.center);
+		
+		//First table
+		firstTable = new Table();
+		firstTable.setFillParent(true);
+		firstTable.add(openHostTable).width(250).pad(5).padRight(50);
+		firstTable.row();
+		firstTable.add(openJoinTable).width(250).pad(5).padLeft(50);
+		firstTable.row();
+		firstTable.add(openOptionsTable).width(250).pad(5).padRight(50);
+		firstTable.row();
+		firstTable.add(openCreditsTable).width(250).pad(5).padLeft(50);
+		firstTable.row();
+		firstTable.add(exitGame).width(250).pad(5).padTop(20);
+		firstTable.setY(-70);
 		
 		//Options table
 		optionsTable = new Table();
@@ -215,19 +232,6 @@ public class MainMenuScreen implements Screen {
 		hostTable.add(startHosting).width(250);
 		hostTable.row();
 		hostTable.add(closeHost).width(250);
-		
-		//First table
-		firstTable = new Table();
-		firstTable.setFillParent(true);
-		firstTable.add(openHostTable).width(250);
-		firstTable.row();
-		firstTable.add(openJoinTable).width(250);
-		firstTable.row();
-		firstTable.add(openOptionsTable).width(250);
-		firstTable.row();
-		firstTable.add(openCreditsTable).width(250);
-		firstTable.row();
-		firstTable.add(exitGame).width(250);
 
 		//Wait for the players to connect
 		waitConnectTable = new Table() {
@@ -252,7 +256,7 @@ public class MainMenuScreen implements Screen {
 		creditsTable.setSkin(skin);
 		creditsTable.add("This game is powered by LibGDX, based on LWJGL");
 		creditsTable.row();
-		creditsTable.add("Programming: Frédéric Deschênes");
+		creditsTable.add("Programming: Frederic Deschenes");
 		creditsTable.row();
 		creditsTable.add("Textures: Camille Archambault, Didier Camus, David Tremblay");
 		creditsTable.row();
@@ -272,7 +276,7 @@ public class MainMenuScreen implements Screen {
 		
 		stage.addActor(firstTable);
 		Gdx.input.setInputProcessor(stage);
-	//	stage.setDebugAll(true);
+//		stage.setDebugAll(true);
 	}
 
 	@Override

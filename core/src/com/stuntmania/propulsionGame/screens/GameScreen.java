@@ -61,7 +61,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 		image = new Sprite(new Texture(Gdx.files.internal("img/cthulu.png")));
 		cthulu = world.createBody(bd);
-		world.setContactListener(new Test());
+//		world.setContactListener(new Test());
 		loader.attachFixture(cthulu, "Name", fd, image.getWidth());
 
 		world.createBody(bdw).createFixture(fdw);
@@ -159,7 +159,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if (button == Buttons.LEFT) {
 			Vector3 vec = new Vector3(screenX, screenY, 0);
 			cam.unproject(vec);
-			cthulu.applyForceToCenter(new Vector2(vec.x - cthulu.getPosition().x, vec.y - cthulu.getPosition().y).scl(-charge), true);
+			cthulu.applyForceToCenter(new Vector2(vec.x - cthulu.getPosition().x, vec.y - cthulu.getPosition().y).nor().scl(-charge), true);
 			charging = false;
 			charge = 0;
 			return true;

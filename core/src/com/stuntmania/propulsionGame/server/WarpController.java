@@ -6,12 +6,14 @@ import com.stuntmania.propulsionGame.PropulsionGame;
 public class WarpController {
 
 	public WarpClient warpClient;
+	public String roomId;
+	public boolean isConnected;
 
 	public WarpController() {
 		initAppwarp();
-		warpClient.addConnectionRequestListener(new ConnectionListener(this));
+		warpClient.addConnectionRequestListener(new ConnectionListener());
 		// warpClient.addChatRequestListener(new ChatListener());
-		// warpClient.addZoneRequestListener(new ZoneListener());
+		warpClient.addZoneRequestListener(new ZoneListener());
 		warpClient.addRoomRequestListener(new RoomListener());
 		warpClient.addNotificationListener(new NotificationListener());
 	}
@@ -19,8 +21,8 @@ public class WarpController {
 	private void initAppwarp() {
 		try {
 			WarpClient.initialize(PropulsionGame.KEY, PropulsionGame.SECRET);
+			WarpClient.enableTrace(true);
 			warpClient = WarpClient.getInstance();
-			warpClient.enableTrace(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -10,7 +10,7 @@ import com.shephertz.app42.gaming.multiplayer.client.events.UpdateEvent;
 import com.shephertz.app42.gaming.multiplayer.client.listener.NotifyListener;
 
 public class NotificationListener implements NotifyListener {
-
+	
 	@Override
 	public void onChatReceived(ChatEvent arg0) {
 		// TODO Auto-generated method stub
@@ -20,7 +20,6 @@ public class NotificationListener implements NotifyListener {
 	@Override
 	public void onGameStarted(String arg0, String arg1, String arg2) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

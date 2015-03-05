@@ -1,0 +1,21 @@
+
+thing.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  split: 17, 14, 17, 14
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+buttonHover
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  split: 17, 14, 16, 15
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

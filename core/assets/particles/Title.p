@@ -103,7 +103,7 @@ active: false
 active: false
 - Tint - 
 colorsCount: 9
-colors0: 0.38431373
+colors0: 0.3764706
 colors1: 0.09803922
 colors2: 0.9647059
 colors3: 0.9647059
@@ -136,7 +136,7 @@ timeline3: 1.0
 attached: false
 continuous: true
 aligned: false
-additive: false
+additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
