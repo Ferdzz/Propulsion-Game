@@ -199,24 +199,23 @@ white
   offset: 0, 0
   index: -1
   
-thing.png
+test.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
-buttontest
-  rotate: false
-  xy: 1, 1
-  size: 32, 32
-  split: 17, 14, 17, 14
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
 buttonHovertest
   rotate: false
   xy: 35, 1
   size: 32, 32
-  split: 17, 14, 16, 15
+  split: 13, 13, 15, 13
   orig: 32, 32
   offset: 0, 0
   index: -1
-  
+buttontest
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  split: 13, 13, 15, 13
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

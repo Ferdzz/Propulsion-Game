@@ -19,8 +19,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.stuntmania.propulsionGame.BodyEditorLoader;
 import com.stuntmania.propulsionGame.PropulsionGame;
+import com.stuntmania.propulsionGame.utils.BodyEditorLoader;
 
 public class GameScreen implements Screen, InputProcessor {
 
@@ -30,6 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
 	private SpriteBatch batch;
 	private Sprite image;
 	private Box2DDebugRenderer debug;
+	private Texture background;
 
 	private boolean charging;
 	private float charge;
@@ -40,6 +41,8 @@ public class GameScreen implements Screen, InputProcessor {
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
 
+		background = new Texture(Gdx.files.internal("img/dank.png"));
+		
 		BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("test.json"));
 		BodyDef bd = new BodyDef();
 		bd.position.set(600, 600);
@@ -59,9 +62,8 @@ public class GameScreen implements Screen, InputProcessor {
 		((PolygonShape) shape).setAsBox(30, 30);
 		fdw.shape = shape;
 
-		image = new Sprite(new Texture(Gdx.files.internal("img/cthulu.png")));
+		image = new Sprite(new Texture(Gdx.files.internal("dick.png")));
 		cthulu = world.createBody(bd);
-//		world.setContactListener(new Test());
 		loader.attachFixture(cthulu, "Name", fd, image.getWidth());
 
 		world.createBody(bdw).createFixture(fdw);
@@ -76,6 +78,10 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(1, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		batch.begin();
+		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
+		
 		update(delta);
 		draw(delta);
 	}

@@ -1,4 +1,4 @@
-package com.stuntmania.propulsionGame;
+package com.stuntmania.propulsionGame.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

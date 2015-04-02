@@ -56,6 +56,7 @@ public class MainMenuScreen implements Screen {
 
 	private Label joinInfo;
 	private Label waitInfo;
+	private Label waitInfo2;
 	
 	@Override
 	public void show() {
@@ -76,7 +77,7 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				stage.addActor(joinTable);
-				joinInfo.setText("Enter the IP of the server");
+				joinInfo.setText("Enter the room ID");
 				firstTable.remove();
 			}
 		});
@@ -138,7 +139,7 @@ public class MainMenuScreen implements Screen {
 		closeWaitConnect.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-//				PropulsionGame.server.disposeSockets();
+				PropulsionGame.warpController.warpClient.disconnect();
 				stage.addActor(hostTable);
 				waitConnectTable.remove();
 			}
@@ -157,13 +158,9 @@ public class MainMenuScreen implements Screen {
 		join.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				try {
-					PropulsionGame.warpController.warpClient.connectWithUserName("join");
-					PropulsionGame.isHost = false;
-					PropulsionGame.game.setScreen(new GameScreen());
-				} catch (Exception e) {
-					joinInfo.setText("Error joining game");
-				}
+				PropulsionGame.warpController.warpClient.connectWithUserName("join");
+	//			PropulsionGame.isHost = false;
+	//			PropulsionGame.game.setScreen(new GameScreen());
 			}
 		});
 		
@@ -172,19 +169,6 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				PropulsionGame.warpController.warpClient.connectWithUserName("host");
-				Gdx.app.postRunnable(new Thread() {
-					@Override
-					public void run() {
-						while (!PropulsionGame.warpController.isConnected) {
-							try {
-								Thread.sleep(10);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						PropulsionGame.game.setScreen(new GameScreen());
-					}
-				});
 				stage.addActor(waitConnectTable);
 				hostTable.remove();
 			}
@@ -192,6 +176,7 @@ public class MainMenuScreen implements Screen {
 		
 		joinInfo = new Label("Enter the IP of the server", skin);
 		waitInfo = new Label("", skin);
+		waitInfo2 = new Label("", skin);
 		
 		joinAddress = new TextField("", skin);
 		joinAddress.setAlignment(Align.center);
@@ -237,16 +222,14 @@ public class MainMenuScreen implements Screen {
 		waitConnectTable = new Table() {
 			@Override
 			public void act(float delta) {
-//				waitInfo.setText(PropulsionGame.server.numberOfOnlinePlayer() + " / 2 players have joined");
-//				if(PropulsionGame.server.numberOfOnlinePlayer() == 2) {
-//					PropulsionGame.isHost = true;
-//					PropulsionGame.game.setScreen(new GameScreen());
-//				}
+				waitInfo.setText("Your room ID is: " + PropulsionGame.warpController.roomId);
 				super.act(delta);
 			}
 		};
 		waitConnectTable.setFillParent(true);
 		waitConnectTable.add(waitInfo);
+		waitConnectTable.row();
+		waitConnectTable.add(waitInfo2);
 		waitConnectTable.row();
 		waitConnectTable.add(closeWaitConnect).width(250);
 		
@@ -283,7 +266,7 @@ public class MainMenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.draw(parallax, Gdx.input.getX() / 11 - 100, Gdx.input.getY() / 11 - 100 , Gdx.graphics.getWidth() * 1.3F, Gdx.graphics.getHeight() * 1.3F);

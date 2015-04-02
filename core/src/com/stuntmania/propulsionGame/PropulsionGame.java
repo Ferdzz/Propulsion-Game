@@ -3,6 +3,7 @@ package com.stuntmania.propulsionGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.net.Socket;
+import com.stuntmania.propulsionGame.screens.GameScreen;
 import com.stuntmania.propulsionGame.screens.MainMenuScreen;
 import com.stuntmania.propulsionGame.server.Server;
 import com.stuntmania.propulsionGame.server.WarpController;
@@ -22,6 +23,6 @@ public class PropulsionGame extends Game {
 	public void create() {
 		game = this;
 		Gdx.graphics.setTitle("Propulsion Game");
-		this.setScreen(new MainMenuScreen());
+		this.setScreen(new GameScreen());
 	}
 }
